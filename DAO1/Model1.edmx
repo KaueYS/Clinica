@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bd_clinica_controleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tb_atendimento">
+          <Key>
+            <PropertyRef Name="atendimento_id" />
+          </Key>
+          <Property Name="atendimento_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="atendimento_data" Type="date" Nullable="false" />
+          <Property Name="atendimento_valor" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="atendimento_historia" Type="varchar" MaxLength="200" />
+          <Property Name="usuario_id" Type="int" Nullable="false" />
+          <Property Name="servico_id" Type="int" Nullable="false" />
+          <Property Name="cliente_id" Type="int" Nullable="false" />
+          <Property Name="colaborador_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_cliente">
+          <Key>
+            <PropertyRef Name="cliente_id" />
+          </Key>
+          <Property Name="cliente_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cliente_nomeCompleto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cliente_dataNascimento" Type="date" Nullable="false" />
+          <Property Name="cliente_nomeMae" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cliente_cpf" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="cliente_nomePai" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cliente_estadoCivil" Type="smallint" Nullable="false" />
+          <Property Name="cliente_nomeConjuge" Type="varchar" MaxLength="50" />
+          <Property Name="cliente_email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="cliente_telefone" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="cliente_cep" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="cliente_endereco" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cliente_numero" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="cliente_bairro" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="cliente_cidade" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="usuario_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_colaborador">
+          <Key>
+            <PropertyRef Name="colaborador_id" />
+          </Key>
+          <Property Name="colaborador_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="colaborador_nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="colaborador_funcao" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="usuario_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_servico">
+          <Key>
+            <PropertyRef Name="servico_id" />
+          </Key>
+          <Property Name="servico_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="servico_nomeProcedimento" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="usuario_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_usuario">
+          <Key>
+            <PropertyRef Name="usuario_id" />
+          </Key>
+          <Property Name="usuario_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usuario_nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="usuario_email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="usuario_senha" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tb_atendimento_tb_cliente">
+          <End Role="tb_cliente" Type="Self.tb_cliente" Multiplicity="1" />
+          <End Role="tb_atendimento" Type="Self.tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_cliente">
+              <PropertyRef Name="cliente_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_atendimento_tb_medico">
+          <End Role="tb_colaborador" Type="Self.tb_colaborador" Multiplicity="1" />
+          <End Role="tb_atendimento" Type="Self.tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_colaborador">
+              <PropertyRef Name="colaborador_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="colaborador_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_atendimento_tb_servico">
+          <End Role="tb_servico" Type="Self.tb_servico" Multiplicity="1" />
+          <End Role="tb_atendimento" Type="Self.tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_servico">
+              <PropertyRef Name="servico_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="servico_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_atendimento_tb_usuario">
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+          <End Role="tb_atendimento" Type="Self.tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_cliente_tb_usuario">
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+          <End Role="tb_cliente" Type="Self.tb_cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_cliente">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_medico_tb_usuario">
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+          <End Role="tb_colaborador" Type="Self.tb_colaborador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_colaborador">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_servico_tb_usuario">
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="1" />
+          <End Role="tb_servico" Type="Self.tb_servico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_servico">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bd_clinica_controleModelStoreContainer">
+          <EntitySet Name="tb_atendimento" EntityType="Self.tb_atendimento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_cliente" EntityType="Self.tb_cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_colaborador" EntityType="Self.tb_colaborador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_servico" EntityType="Self.tb_servico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tb_atendimento_tb_cliente" Association="Self.FK_tb_atendimento_tb_cliente">
+            <End Role="tb_cliente" EntitySet="tb_cliente" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_atendimento_tb_medico" Association="Self.FK_tb_atendimento_tb_medico">
+            <End Role="tb_colaborador" EntitySet="tb_colaborador" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_atendimento_tb_servico" Association="Self.FK_tb_atendimento_tb_servico">
+            <End Role="tb_servico" EntitySet="tb_servico" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_atendimento_tb_usuario" Association="Self.FK_tb_atendimento_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_cliente_tb_usuario" Association="Self.FK_tb_cliente_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_cliente" EntitySet="tb_cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_medico_tb_usuario" Association="Self.FK_tb_medico_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_colaborador" EntitySet="tb_colaborador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_servico_tb_usuario" Association="Self.FK_tb_servico_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_servico" EntitySet="tb_servico" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bd_clinica_controleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="banco" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="tb_atendimento" EntityType="bd_clinica_controleModel.tb_atendimento" />
+          <EntitySet Name="tb_cliente" EntityType="bd_clinica_controleModel.tb_cliente" />
+          <EntitySet Name="tb_colaborador" EntityType="bd_clinica_controleModel.tb_colaborador" />
+          <EntitySet Name="tb_servico" EntityType="bd_clinica_controleModel.tb_servico" />
+          <EntitySet Name="tb_usuario" EntityType="bd_clinica_controleModel.tb_usuario" />
+          <AssociationSet Name="FK_tb_atendimento_tb_cliente" Association="bd_clinica_controleModel.FK_tb_atendimento_tb_cliente">
+            <End Role="tb_cliente" EntitySet="tb_cliente" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_atendimento_tb_medico" Association="bd_clinica_controleModel.FK_tb_atendimento_tb_medico">
+            <End Role="tb_colaborador" EntitySet="tb_colaborador" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_atendimento_tb_servico" Association="bd_clinica_controleModel.FK_tb_atendimento_tb_servico">
+            <End Role="tb_servico" EntitySet="tb_servico" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_atendimento_tb_usuario" Association="bd_clinica_controleModel.FK_tb_atendimento_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_atendimento" EntitySet="tb_atendimento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_cliente_tb_usuario" Association="bd_clinica_controleModel.FK_tb_cliente_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_cliente" EntitySet="tb_cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_medico_tb_usuario" Association="bd_clinica_controleModel.FK_tb_medico_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_colaborador" EntitySet="tb_colaborador" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_servico_tb_usuario" Association="bd_clinica_controleModel.FK_tb_servico_tb_usuario">
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+            <End Role="tb_servico" EntitySet="tb_servico" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tb_atendimento">
+          <Key>
+            <PropertyRef Name="atendimento_id" />
+          </Key>
+          <Property Name="atendimento_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="atendimento_data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="atendimento_valor" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="atendimento_historia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_id" Type="Int32" Nullable="false" />
+          <Property Name="servico_id" Type="Int32" Nullable="false" />
+          <Property Name="cliente_id" Type="Int32" Nullable="false" />
+          <Property Name="colaborador_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_cliente" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_cliente" FromRole="tb_atendimento" ToRole="tb_cliente" />
+          <NavigationProperty Name="tb_colaborador" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_medico" FromRole="tb_atendimento" ToRole="tb_colaborador" />
+          <NavigationProperty Name="tb_servico" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_servico" FromRole="tb_atendimento" ToRole="tb_servico" />
+          <NavigationProperty Name="tb_usuario" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_usuario" FromRole="tb_atendimento" ToRole="tb_usuario" />
+        </EntityType>
+        <EntityType Name="tb_cliente">
+          <Key>
+            <PropertyRef Name="cliente_id" />
+          </Key>
+          <Property Name="cliente_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cliente_nomeCompleto" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_dataNascimento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cliente_nomeMae" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_cpf" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_nomePai" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_estadoCivil" Type="Int16" Nullable="false" />
+          <Property Name="cliente_nomeConjuge" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_email" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_telefone" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_cep" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_endereco" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_numero" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_bairro" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cliente_cidade" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_atendimento" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_cliente" FromRole="tb_cliente" ToRole="tb_atendimento" />
+          <NavigationProperty Name="tb_usuario" Relationship="bd_clinica_controleModel.FK_tb_cliente_tb_usuario" FromRole="tb_cliente" ToRole="tb_usuario" />
+        </EntityType>
+        <EntityType Name="tb_colaborador">
+          <Key>
+            <PropertyRef Name="colaborador_id" />
+          </Key>
+          <Property Name="colaborador_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="colaborador_nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="colaborador_funcao" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_atendimento" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_medico" FromRole="tb_colaborador" ToRole="tb_atendimento" />
+          <NavigationProperty Name="tb_usuario" Relationship="bd_clinica_controleModel.FK_tb_medico_tb_usuario" FromRole="tb_colaborador" ToRole="tb_usuario" />
+        </EntityType>
+        <EntityType Name="tb_servico">
+          <Key>
+            <PropertyRef Name="servico_id" />
+          </Key>
+          <Property Name="servico_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="servico_nomeProcedimento" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_atendimento" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_servico" FromRole="tb_servico" ToRole="tb_atendimento" />
+          <NavigationProperty Name="tb_usuario" Relationship="bd_clinica_controleModel.FK_tb_servico_tb_usuario" FromRole="tb_servico" ToRole="tb_usuario" />
+        </EntityType>
+        <EntityType Name="tb_usuario">
+          <Key>
+            <PropertyRef Name="usuario_id" />
+          </Key>
+          <Property Name="usuario_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usuario_nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_senha" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_atendimento" Relationship="bd_clinica_controleModel.FK_tb_atendimento_tb_usuario" FromRole="tb_usuario" ToRole="tb_atendimento" />
+          <NavigationProperty Name="tb_cliente" Relationship="bd_clinica_controleModel.FK_tb_cliente_tb_usuario" FromRole="tb_usuario" ToRole="tb_cliente" />
+          <NavigationProperty Name="tb_colaborador" Relationship="bd_clinica_controleModel.FK_tb_medico_tb_usuario" FromRole="tb_usuario" ToRole="tb_colaborador" />
+          <NavigationProperty Name="tb_servico" Relationship="bd_clinica_controleModel.FK_tb_servico_tb_usuario" FromRole="tb_usuario" ToRole="tb_servico" />
+        </EntityType>
+        <Association Name="FK_tb_atendimento_tb_cliente">
+          <End Type="bd_clinica_controleModel.tb_cliente" Role="tb_cliente" Multiplicity="1" />
+          <End Type="bd_clinica_controleModel.tb_atendimento" Role="tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_cliente">
+              <PropertyRef Name="cliente_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="cliente_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_atendimento_tb_medico">
+          <End Type="bd_clinica_controleModel.tb_colaborador" Role="tb_colaborador" Multiplicity="1" />
+          <End Type="bd_clinica_controleModel.tb_atendimento" Role="tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_colaborador">
+              <PropertyRef Name="colaborador_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="colaborador_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_atendimento_tb_servico">
+          <End Type="bd_clinica_controleModel.tb_servico" Role="tb_servico" Multiplicity="1" />
+          <End Type="bd_clinica_controleModel.tb_atendimento" Role="tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_servico">
+              <PropertyRef Name="servico_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="servico_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_atendimento_tb_usuario">
+          <End Type="bd_clinica_controleModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+          <End Type="bd_clinica_controleModel.tb_atendimento" Role="tb_atendimento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_atendimento">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_cliente_tb_usuario">
+          <End Type="bd_clinica_controleModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+          <End Type="bd_clinica_controleModel.tb_cliente" Role="tb_cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_cliente">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_medico_tb_usuario">
+          <End Type="bd_clinica_controleModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+          <End Type="bd_clinica_controleModel.tb_colaborador" Role="tb_colaborador" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_colaborador">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_servico_tb_usuario">
+          <End Type="bd_clinica_controleModel.tb_usuario" Role="tb_usuario" Multiplicity="1" />
+          <End Type="bd_clinica_controleModel.tb_servico" Role="tb_servico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_usuario">
+              <PropertyRef Name="usuario_id" />
+            </Principal>
+            <Dependent Role="tb_servico">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bd_clinica_controleModelStoreContainer" CdmEntityContainer="banco">
+          <EntitySetMapping Name="tb_atendimento">
+            <EntityTypeMapping TypeName="bd_clinica_controleModel.tb_atendimento">
+              <MappingFragment StoreEntitySet="tb_atendimento">
+                <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+                <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
+                <ScalarProperty Name="servico_id" ColumnName="servico_id" />
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+                <ScalarProperty Name="atendimento_historia" ColumnName="atendimento_historia" />
+                <ScalarProperty Name="atendimento_valor" ColumnName="atendimento_valor" />
+                <ScalarProperty Name="atendimento_data" ColumnName="atendimento_data" />
+                <ScalarProperty Name="atendimento_id" ColumnName="atendimento_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_cliente">
+            <EntityTypeMapping TypeName="bd_clinica_controleModel.tb_cliente">
+              <MappingFragment StoreEntitySet="tb_cliente">
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+                <ScalarProperty Name="cliente_cidade" ColumnName="cliente_cidade" />
+                <ScalarProperty Name="cliente_bairro" ColumnName="cliente_bairro" />
+                <ScalarProperty Name="cliente_numero" ColumnName="cliente_numero" />
+                <ScalarProperty Name="cliente_endereco" ColumnName="cliente_endereco" />
+                <ScalarProperty Name="cliente_cep" ColumnName="cliente_cep" />
+                <ScalarProperty Name="cliente_telefone" ColumnName="cliente_telefone" />
+                <ScalarProperty Name="cliente_email" ColumnName="cliente_email" />
+                <ScalarProperty Name="cliente_nomeConjuge" ColumnName="cliente_nomeConjuge" />
+                <ScalarProperty Name="cliente_estadoCivil" ColumnName="cliente_estadoCivil" />
+                <ScalarProperty Name="cliente_nomePai" ColumnName="cliente_nomePai" />
+                <ScalarProperty Name="cliente_cpf" ColumnName="cliente_cpf" />
+                <ScalarProperty Name="cliente_nomeMae" ColumnName="cliente_nomeMae" />
+                <ScalarProperty Name="cliente_dataNascimento" ColumnName="cliente_dataNascimento" />
+                <ScalarProperty Name="cliente_nomeCompleto" ColumnName="cliente_nomeCompleto" />
+                <ScalarProperty Name="cliente_id" ColumnName="cliente_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_colaborador">
+            <EntityTypeMapping TypeName="bd_clinica_controleModel.tb_colaborador">
+              <MappingFragment StoreEntitySet="tb_colaborador">
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+                <ScalarProperty Name="colaborador_funcao" ColumnName="colaborador_funcao" />
+                <ScalarProperty Name="colaborador_nome" ColumnName="colaborador_nome" />
+                <ScalarProperty Name="colaborador_id" ColumnName="colaborador_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_servico">
+            <EntityTypeMapping TypeName="bd_clinica_controleModel.tb_servico">
+              <MappingFragment StoreEntitySet="tb_servico">
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+                <ScalarProperty Name="servico_nomeProcedimento" ColumnName="servico_nomeProcedimento" />
+                <ScalarProperty Name="servico_id" ColumnName="servico_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_usuario">
+            <EntityTypeMapping TypeName="bd_clinica_controleModel.tb_usuario">
+              <MappingFragment StoreEntitySet="tb_usuario">
+                <ScalarProperty Name="usuario_senha" ColumnName="usuario_senha" />
+                <ScalarProperty Name="usuario_email" ColumnName="usuario_email" />
+                <ScalarProperty Name="usuario_nome" ColumnName="usuario_nome" />
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
